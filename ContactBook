@@ -1,0 +1,66 @@
+class ContactManager:
+    def _init_(self):
+        self.contacts = {}
+
+    def add_contact(self, name, phone_number, email, address):
+        self.contacts[name] = {'Phone Number': phone_number, 'Email': email, 'Address': address}
+        print(f"Contact {name} added successfully!")
+
+    def view_contacts(self):
+        if not self.contacts:
+            print("No contacts found.")
+        else:
+            print("Contact List:")
+            for name, details in self.contacts.items():
+                print(f"{name}: {details['Phone Number']}")
+
+    def search_contact(self, keyword):
+        matches = [(name, details) for name, details in self.contacts.items() if keyword.lower() in name.lower() or keyword in details['Phone Number']]
+        if not matches:
+            print("No matching contacts found.")
+        else:
+            print("Matching Contacts:")
+            for name, details in matches:
+                print(f"{name}: {details['Phone Number']}")
+
+    def update_contact(self, name, phone_number=None, email=None, address=None):
+        if name in self.contacts:
+            contact = self.contacts[name]
+            if phone_number:
+                contact['Phone Number'] = phone_number
+            if email:
+                contact['Email'] = email
+            if address:
+                contact['Address'] = address
+            print(f"Contact {name} updated successfully!")
+        else:
+            print(f"Contact {name} not found.")
+
+    def delete_contact(self, name):
+        if name in self.contacts:
+            del self.contacts[name]
+            print(f"Contact {name} deleted successfully!")
+        else:
+            print(f"Contact {name} not found.")
+
+# Example Usage:
+contact_manager = ContactManager()
+
+# Add contacts
+contact_manager.add_contact("John Doe", "123-456-7890", "john@example.com", "123 Main St")
+contact_manager.add_contact("Jane Smith", "987-654-3210", "jane@example.com", "456 Oak Ave")
+
+# View contacts
+contact_manager.view_contacts()
+
+# Search for contacts
+contact_manager.search_contact("John")
+
+# Update contact
+contact_manager.update_contact("John Doe", phone_number="111-222-3333")
+
+# Delete contact
+contact_manager.delete_contact("Jane Smith")
+
+# View updated contact list
+contact_manager.view_contacts()
